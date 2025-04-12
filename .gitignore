@@ -1,0 +1,27 @@
+# Ignorar pastas da Godot
+.import/
+.godot/
+.godot/*
+!.godot/.gitkeep
+.mono/
+.cache/
+.cfg/
+.bin/
+
+# Garantir a inclusão da pasta de cartas (corrigido "assets")
+!assets/Cartas/
+
+# VS Code
+.vscode/
+
+# Arquivos de build (C# / .NET)
+*.dll
+*.exe
+*.pdb
+*.csproj.user
+*.sln.docstates
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
