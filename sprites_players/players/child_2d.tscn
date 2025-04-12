@@ -1,0 +1,155 @@
+[gd_scene load_steps=12 format=3 uid="uid://djdqv1ats72uc"]
+
+[ext_resource type="Texture2D" uid="uid://bovbkkei0dhq5" path="res://sprites_players/players/Untitled 10-16-2024 02-56-30 (2).png" id="1_efdbk"]
+
+[sub_resource type="GDScript" id="GDScript_bh54d"]
+script/source = "extends CharacterBody2D
+
+# Declarando as variáveis
+var abstinence_max: float = 100.0  # Exemplo de valor para a máxima abstinência
+var addicted_bar: ProgressBar  # Assumindo que é uma ProgressBar
+var RUN_SPEED: float = 400.0  # Velocidade de corrida
+var SPEED: float = 200.0  # Velocidade normal
+var sprite: AnimatedSprite2D  # Sprite para animações
+
+func _ready():
+	sprite = $anim
+	
+	# Instanciando addicted_bar se não for um nó na cena
+	addicted_bar = ProgressBar.new()  # Cria uma nova ProgressBar
+	add_child(addicted_bar)  # Adiciona o ProgressBar à cena
+	addicted_bar.max_value = abstinence_max
+	addicted_bar.value = 0.0  # Inicializando com valor 0
+
+func increment_addictionBar(coefficient: float, currentInvestmentCapital: float) -> void:
+	var incrementValue: float = coefficient * currentInvestmentCapital
+	addicted_bar.value += incrementValue
+
+func decrement_addictionBar(coefficient: float, currentInvestmentCapital: float) -> void:
+	var incrementValue: float = coefficient * currentInvestmentCapital
+	addicted_bar.value -= incrementValue
+
+# Função para processar física
+func _physics_process(delta: float) -> void:
+	# Adicionando gravidade quando não estiver no chão
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	# Verificando se o personagem está correndo
+	var is_running = Input.is_action_pressed(\"ui_shift\")
+	var direction := Input.get_axis(\"ui_left\", \"ui_right\")
+
+	if is_running:
+		# Se estiver correndo, move-se mais rápido
+		velocity.x = direction * RUN_SPEED
+		if direction != 0:
+			sprite.play(\"Filho correndo\")  # Animação de correr
+			sprite.scale.x = direction  # Direção da animação de correr
+	elif direction == 0:
+		# Se não estiver se movendo, pare
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		sprite.play(\"Filho parado\")  # Animação de parado
+	else:
+		# Se estiver se movendo, andar normalmente
+		velocity.x = direction * SPEED
+		sprite.play(\"Filho andando\")  # Animação de andar
+		sprite.scale.x = direction  # Direção da animação de andar
+
+	# Movendo o personagem
+	move_and_slide()
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s1xjl"]
+atlas = ExtResource("1_efdbk")
+region = Rect2(226, 0, 94, 197)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o51cg"]
+atlas = ExtResource("1_efdbk")
+region = Rect2(320, 0, 94, 197)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_upedg"]
+atlas = ExtResource("1_efdbk")
+region = Rect2(422, 0, 94, 197)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lx3n7"]
+atlas = ExtResource("1_efdbk")
+region = Rect2(122, 204, 115, 197)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rfnuq"]
+atlas = ExtResource("1_efdbk")
+region = Rect2(237, 204, 115, 197)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dxghn"]
+atlas = ExtResource("1_efdbk")
+region = Rect2(352, 204, 115, 197)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sw06a"]
+atlas = ExtResource("1_efdbk")
+region = Rect2(24, 0, 90, 197)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uat7h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s1xjl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o51cg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_upedg")
+}],
+"loop": true,
+"name": &"Filho andando",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lx3n7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rfnuq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dxghn")
+}],
+"loop": true,
+"name": &"Filho correndo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sw06a")
+}],
+"loop": true,
+"name": &"Filho parado",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uoy8m"]
+size = Vector2(84, 187)
+
+[node name="Child" type="CharacterBody2D"]
+script = SubResource("GDScript_bh54d")
+
+[node name="anim" type="AnimatedSprite2D" parent="."]
+position = Vector2(905, 700)
+sprite_frames = SubResource("SpriteFrames_uat7h")
+animation = &"Filho andando"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(906, 693.5)
+shape = SubResource("RectangleShape2D_uoy8m")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(864, 526)
+zoom = Vector2(1.5, 1.5)
+limit_left = 65
+limit_right = 1350
+drag_horizontal_enabled = true
+drag_left_margin = 0.12
+drag_top_margin = 0.12
+drag_right_margin = 0.12
+drag_bottom_margin = 0.12
+editor_draw_limits = true
+editor_draw_drag_margin = true

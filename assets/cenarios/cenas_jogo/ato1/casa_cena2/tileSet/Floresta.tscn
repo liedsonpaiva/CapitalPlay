@@ -1,0 +1,69 @@
+[gd_scene load_steps=7 format=3 uid="uid://dq4nux2n3mbmj"]
+
+[sub_resource type="Resource" id="Resource_xyaxr"]
+metadata/__load_path__ = "res://assents/Cenarios/Cenas Jogo/Ato 1/Casa_Cena 2/NightForest/Layers/1.png"
+
+[sub_resource type="Resource" id="Resource_qgcfo"]
+metadata/__load_path__ = "res://assents/Cenarios/Cenas Jogo/Ato 1/Casa_Cena 2/NightForest/Layers/2.png"
+
+[sub_resource type="Resource" id="Resource_utjbs"]
+metadata/__load_path__ = "res://assents/Cenarios/Cenas Jogo/Ato 1/Casa_Cena 2/NightForest/Layers/3.png"
+
+[sub_resource type="Resource" id="Resource_424cy"]
+metadata/__load_path__ = "res://assents/Cenarios/Cenas Jogo/Ato 1/Casa_Cena 2/NightForest/Layers/4.png"
+
+[sub_resource type="Resource" id="Resource_w3pla"]
+metadata/__load_path__ = "res://assents/Cenarios/Cenas Jogo/Ato 1/Casa_Cena 2/NightForest/Layers/5.png"
+
+[sub_resource type="Resource" id="Resource_jd1d8"]
+metadata/__load_path__ = "res://assents/Cenarios/Cenas Jogo/Ato 1/Casa_Cena 2/NightForest/Layers/6.png"
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+
+[node name="1" type="ParallaxLayer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="1"]
+texture_filter = 1
+position = Vector2(1824, 548)
+scale = Vector2(1.7, 1.7)
+texture = SubResource("Resource_xyaxr")
+
+[node name="2" type="ParallaxLayer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="2"]
+texture_filter = 1
+position = Vector2(1824, 548)
+scale = Vector2(1.7, 1.7)
+texture = SubResource("Resource_qgcfo")
+
+[node name="3" type="ParallaxLayer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="3"]
+texture_filter = 1
+position = Vector2(1824, 548)
+scale = Vector2(1.7, 1.7)
+texture = SubResource("Resource_utjbs")
+
+[node name="4" type="ParallaxLayer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="4"]
+texture_filter = 1
+position = Vector2(1824, 548)
+scale = Vector2(1.7, 1.7)
+texture = SubResource("Resource_424cy")
+
+[node name="5" type="ParallaxLayer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="5"]
+texture_filter = 1
+position = Vector2(1824, 548)
+scale = Vector2(1.7, 1.7)
+texture = SubResource("Resource_w3pla")
+
+[node name="6" type="ParallaxLayer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="6"]
+texture_filter = 1
+position = Vector2(1824, 548)
+scale = Vector2(1.7, 1.7)
+texture = SubResource("Resource_jd1d8")
