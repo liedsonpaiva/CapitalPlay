@@ -1,0 +1,32 @@
+[gd_scene load_steps=8 format=3 uid="uid://lja1dwv8ck7r"]
+
+[ext_resource type="Script" uid="uid://hlrgeo53trbw" path="res://scripts/jogo_de_tabuleiro/TesteSaldo.gd" id="1_5ojb3"]
+[ext_resource type="Script" uid="uid://k7uj0kvby2s3" path="res://scripts/jogo_de_tabuleiro/carta_info.gd" id="2_68vob"]
+[ext_resource type="Script" uid="uid://dwihl2tdpis5c" path="res://scripts/jogo_de_tabuleiro/menu_de_ações.gd" id="2_nooq3"]
+[ext_resource type="Script" uid="uid://b7ux6b1dp5jdy" path="res://scripts/jogo_de_tabuleiro/tabuleiro.gd" id="3_bkbh3"]
+[ext_resource type="Texture2D" uid="uid://8aw5sbaf4wxp" path="res://assets/tabuleiro/pixil-frame-0.png" id="4_0al0x"]
+[ext_resource type="Script" uid="uid://h7wn6irmohsu" path="res://scripts/jogo_de_tabuleiro/saldo.gd" id="5_qym0p"]
+[ext_resource type="Script" uid="uid://ctjvqtg4h5pyd" path="res://scripts/jogo_de_tabuleiro/acoes.gd" id="6_xwmal"]
+
+[node name="Jogo de tabuleiro" type="Node2D"]
+script = ExtResource("1_5ojb3")
+
+[node name="Carta info" type="Node2D" parent="."]
+script = ExtResource("2_68vob")
+
+[node name="Menu de ações" type="Node2D" parent="."]
+script = ExtResource("2_nooq3")
+
+[node name="Tabuleiro" type="Node2D" parent="."]
+script = ExtResource("3_bkbh3")
+
+[node name="Sprite2D" type="Sprite2D" parent="Tabuleiro"]
+position = Vector2(332.5, 134.5)
+scale = Vector2(7.65, 7.18)
+texture = ExtResource("4_0al0x")
+
+[node name="Saldo" type="Node2D" parent="."]
+script = ExtResource("5_qym0p")
+
+[node name="acoes" type="Node2D" parent="."]
+script = ExtResource("6_xwmal")

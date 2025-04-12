@@ -1,0 +1,7 @@
+.godot/*
+!.godot/.gitkeep
+.cache
+.bin
+.cfg
+#garantindo a importacao da pasta Cartas
+!assents/Cartas
