@@ -185,15 +185,19 @@ func verificar_vitoria():
 func realizar_compra(nome_acao: String, label_node: Label, quantidade_ref: String):
 	var quantidade = self.get(quantidade_ref)
 
-	label_node.text = "R$ %.2f" % menu.calcular_preco_total(nome_acao, quantidade)
-	menu.comprar_acao(nome_acao, quantidade)
-	quantidade += 1
-	self.set(quantidade_ref, quantidade)
-
-	label_node.text = "R$ %.2f" % menu.calcular_preco_total(nome_acao, quantidade)
-	$Sprite2D/SaldoValor.text = "R$ %.2f" % saldo.puxar_saldo()
-	atualizar_lucro()
-	verificar_vitoria()
+	var preco_total = menu.calcular_preco_total(nome_acao, quantidade + 1) # +1 para considerar a compra da ação
+	if saldo.puxar_saldo() >= preco_total:
+		label_node.text = "R$ %.2f" % preco_total
+		menu.comprar_acao(nome_acao, 1)
+		quantidade += 1
+		self.set(quantidade_ref, quantidade)
+		$Sprite2D/SaldoValor.text = "R$ %.2f" % saldo.puxar_saldo()
+		atualizar_lucro()
+		verificar_vitoria()
+	else:
+		print("Saldo insuficiente para comprar mais ações.")
+		# Pode também exibir uma mensagem de erro na interface do usuário
+	
 
 func realizar_venda(nome_acao: String, label_node: Label, quantidade_ref: String):
 	var quantidade = self.get(quantidade_ref)
