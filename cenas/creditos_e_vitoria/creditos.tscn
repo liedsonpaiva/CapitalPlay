@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bujdl2ekhfamd"]
+[gd_scene load_steps=20 format=3 uid="uid://bujdl2ekhfamd"]
 
 [ext_resource type="Script" uid="uid://cojovgrd14r4j" path="res://scripts/creditos_e_vitoria/Creditos.cs" id="1_g1h8v"]
 [ext_resource type="Texture2D" uid="uid://bnrhlde46dxi5" path="res://assets/cenarios/Menu/fundo_da_tela_de_credito/1.png" id="2_tm116"]
@@ -8,12 +8,6 @@
 [ext_resource type="Theme" uid="uid://e4phmqgo0wcg" path="res://scripts/menu/fonte_Menu.tres" id="7_5uk8y"]
 [ext_resource type="FontFile" uid="uid://cgygq4u5j0y1w" path="res://assets/fontes _temas/futuro_do_jogo/RevMiniPixel.ttf" id="8_qraxi"]
 [ext_resource type="Shader" uid="uid://c41kmqlrs4dya" path="res://utilitarios/CenaDeTransicao/Shaders_Transition.tres" id="9_nhfui"]
-
-[sub_resource type="GDScript" id="GDScript_n2yn3"]
-script/source = "extends Sprite2D
-func _process(delta):
-	position+=(get_global_mouse_position()*delta)-position
-"
 
 [sub_resource type="LabelSettings" id="LabelSettings_1t7u3"]
 font_size = 40
@@ -144,25 +138,21 @@ expand_mode = 2
 texture_filter = 1
 scale = Vector2(1.3, 1.3)
 texture = ExtResource("2_tm116")
-script = SubResource("GDScript_n2yn3")
 
 [node name="Camada 3" type="Sprite2D" parent="bg/Animação Céu Estrelado"]
 texture_filter = 1
 scale = Vector2(1.3, 1.3)
 texture = ExtResource("4_rtckn")
-script = SubResource("GDScript_n2yn3")
 
 [node name="Camada 2" type="Sprite2D" parent="bg/Animação Céu Estrelado"]
 texture_filter = 1
 scale = Vector2(1.3, 1.3)
 texture = ExtResource("5_031bn")
-script = SubResource("GDScript_n2yn3")
 
 [node name="Camada 1" type="Sprite2D" parent="bg/Animação Céu Estrelado"]
 texture_filter = 1
 scale = Vector2(1.3, 1.3)
 texture = ExtResource("6_plcaj")
-script = SubResource("GDScript_n2yn3")
 
 [node name="marginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -212,7 +202,7 @@ layout_direction = 1
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxEmpty_31k3t")
 
-[node name="voltaMenu" type="Button" parent="marginContainer/HBoxContainer/VBoxContainer"]
+[node name="voltarMenu" type="Button" parent="marginContainer/HBoxContainer/VBoxContainer"]
 texture_filter = 1
 layout_mode = 2
 theme = SubResource("Theme_xwbqu")
@@ -243,4 +233,4 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
-[connection signal="pressed" from="marginContainer/HBoxContainer/VBoxContainer/voltaMenu" to="." method="OnVoltaMenuPressed"]
+[connection signal="pressed" from="marginContainer/HBoxContainer/VBoxContainer/voltarMenu" to="." method="OnVoltarMenuPressed"]

@@ -1,6 +1,6 @@
-[gd_scene load_steps=28 format=3 uid="uid://djkpwwnuhpoe2"]
+[gd_scene load_steps=29 format=3 uid="uid://djkpwwnuhpoe2"]
 
-[ext_resource type="Script" uid="uid://b7ux6b1dp5jdy" path="res://scripts/jogo_de_tabuleiro/tabuleiro.gd" id="1_iwsqn"]
+[ext_resource type="Script" uid="uid://3l0pjd585y31" path="res://scripts/jogo_de_tabuleiro/Tabuleiro.cs" id="1_5l768"]
 [ext_resource type="Texture2D" uid="uid://dxfcolaj3p1yq" path="res://assets/tabuleiro/fundo/imagem.png" id="2_lu2ht"]
 [ext_resource type="Shader" uid="uid://c41kmqlrs4dya" path="res://utilitarios/CenaDeTransicao/Shaders_Transition.tres" id="2_uoqxv"]
 [ext_resource type="Texture2D" uid="uid://cx20a35fbvyxl" path="res://assets/tabuleiro/saldo/calculadora.png" id="3_f4sdg"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://ck2410coto4ek" path="res://assets/tabuleiro/area_da_carta/area_da_carta.png" id="17_ultk0"]
 [ext_resource type="Theme" uid="uid://bje24vjgkssut" path="res://assets/fontes _temas/futuro_do_jogo/menuTema.tres" id="17_xucgm"]
 [ext_resource type="Texture2D" uid="uid://c1nwl347qagwx" path="res://assets/tabuleiro/metas/meta2.png" id="20_5g8dt"]
+[ext_resource type="Script" uid="uid://dm6uxvjgq5lfb" path="res://scripts/jogo_de_tabuleiro/Cartas.cs" id="21_764jy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_81cwj"]
 shader = ExtResource("2_uoqxv")
@@ -93,7 +94,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_iwsqn")
+script = ExtResource("1_5l768")
 
 [node name="Transição" type="CanvasLayer" parent="."]
 layer = 2
@@ -119,6 +120,7 @@ libraries = {
 autoplay = "Transição"
 
 [node name="Background" type="Sprite2D" parent="."]
+visible = false
 texture_filter = 1
 position = Vector2(801.5, 409.5)
 scale = Vector2(1.8, 1.8)
@@ -551,10 +553,11 @@ offset_bottom = 257.0
 theme = ExtResource("17_xucgm")
 text = "Proximo Turno->"
 
-[node name="ÁreaDaCarta" type="Sprite2D" parent="."]
+[node name="AreaDaCarta" type="Sprite2D" parent="."]
 position = Vector2(1424, 655)
 scale = Vector2(0.867672, 0.811623)
 texture = ExtResource("17_ultk0")
+script = ExtResource("21_764jy")
 
 [node name="Lucro" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -583,13 +586,14 @@ theme_override_fonts/font = ExtResource("8_b5nva")
 theme_override_font_sizes/font_size = 30
 text = " 0,00"
 
-[connection signal="pressed" from="ticketAlimentacao/btnComprarAlim" to="." method="_on_btn_comprar_alim_pressed"]
-[connection signal="pressed" from="ticketAlimentacao/btnVenderAlim" to="." method="_on_btn_vender_alim_pressed"]
-[connection signal="pressed" from="ticketSiderurgica/btnComprarSide" to="." method="_on_btn_comprar_side_pressed"]
-[connection signal="pressed" from="ticketSiderurgica/btnVenderSide" to="." method="_on_btn_vender_side_pressed"]
-[connection signal="pressed" from="ticketTecnologia/btnComprarTecno" to="." method="_on_btn_comprar_tecno_pressed"]
-[connection signal="pressed" from="ticketTecnologia/btnVenderTecno" to="." method="_on_btn_vender_tecno_pressed"]
-[connection signal="pressed" from="ticketTransporte/btnComprarTrans" to="." method="_on_btn_comprar_trans_pressed"]
-[connection signal="pressed" from="ticketTransporte/btnVenderTrans" to="." method="_on_btn_vender_trans_pressed"]
-[connection signal="pressed" from="ticketSaude/btnComprarSau" to="." method="_on_btn_comprar_sau_pressed"]
-[connection signal="pressed" from="ticketSaude/btnVenderSau" to="." method="_on_btn_vender_sau_pressed"]
+[connection signal="pressed" from="ticketAlimentacao/btnComprarAlim" to="." method="OnBtnComprarAlimPressed"]
+[connection signal="pressed" from="ticketAlimentacao/btnVenderAlim" to="." method="OnBtnVenderAlimPressed"]
+[connection signal="pressed" from="ticketSiderurgica/btnComprarSide" to="." method="OnBtnComprarSidePressed"]
+[connection signal="pressed" from="ticketSiderurgica/btnVenderSide" to="." method="OnBtnVenderSidePressed"]
+[connection signal="pressed" from="ticketTecnologia/btnComprarTecno" to="." method="OnBtnComprarTecnoPressed"]
+[connection signal="pressed" from="ticketTecnologia/btnVenderTecno" to="." method="OnBtnVenderTecnoPressed"]
+[connection signal="pressed" from="ticketTransporte/btnComprarTrans" to="." method="OnBtnComprarTransPressed"]
+[connection signal="pressed" from="ticketTransporte/btnVenderTrans" to="." method="OnBtnVenderTransPressed"]
+[connection signal="pressed" from="ticketSaude/btnComprarSau" to="." method="OnBtnComprarSauPressed"]
+[connection signal="pressed" from="ticketSaude/btnVenderSau" to="." method="OnBtnVenderSauPressed"]
+[connection signal="pressed" from="BotaoProximoTurno" to="." method="OnBotaoProximoTurno"]

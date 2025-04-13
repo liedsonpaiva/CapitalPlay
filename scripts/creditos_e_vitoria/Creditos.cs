@@ -3,16 +3,14 @@ using System;
 
 public partial class Creditos : Control
 {
-    private Button _btnVoltar;
-
-    public override void _Ready()
+   public override void _Ready()
     {
-        _btnVoltar = GetNode<Button>("voltaMenu");
-        _btnVoltar.Pressed += OnVoltaMenuPressed;
+    var botao = GetNode<Button>("marginContainer/HBoxContainer/VBoxContainer/voltarMenu");
+    botao.Pressed += OnVoltarMenuPressed;
     }
 
-    private void OnVoltaMenuPressed()
+    private void OnVoltarMenuPressed()
     {
-        GetTree().ChangeSceneToFile("res://Cenas/Menu/Menu.tscn");
+        GetTree().ChangeSceneToFile("res://cenas/inicio/inicio.tscn"); 
     }
 }
