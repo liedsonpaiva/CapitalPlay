@@ -1,8 +1,8 @@
 [gd_scene load_steps=29 format=3 uid="uid://djkpwwnuhpoe2"]
 
 [ext_resource type="Script" uid="uid://3l0pjd585y31" path="res://scripts/jogo_de_tabuleiro/Tabuleiro.cs" id="1_5l768"]
-[ext_resource type="Texture2D" uid="uid://dxfcolaj3p1yq" path="res://assets/tabuleiro/fundo/imagem.png" id="2_lu2ht"]
 [ext_resource type="Shader" uid="uid://c41kmqlrs4dya" path="res://utilitarios/CenaDeTransicao/Shaders_Transition.tres" id="2_uoqxv"]
+[ext_resource type="Texture2D" uid="uid://ctm38ayqnicx3" path="res://assets/tabuleiro/fundo/fundo.png" id="3_764jy"]
 [ext_resource type="Texture2D" uid="uid://cx20a35fbvyxl" path="res://assets/tabuleiro/saldo/calculadora.png" id="3_f4sdg"]
 [ext_resource type="Theme" uid="uid://e4phmqgo0wcg" path="res://scripts/menu/fonte_Menu.tres" id="3_qutbl"]
 [ext_resource type="Texture2D" uid="uid://buqgrihxmdp25" path="res://assets/tabuleiro/metas/meta1.png" id="5_dtynq"]
@@ -107,7 +107,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -174.0
 offset_top = -40.0
-offset_bottom = -44.0
+offset_right = 56.0
+offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -120,11 +121,10 @@ libraries = {
 autoplay = "Transição"
 
 [node name="Background" type="Sprite2D" parent="."]
-visible = false
 texture_filter = 1
-position = Vector2(801.5, 409.5)
-scale = Vector2(1.8, 1.8)
-texture = ExtResource("2_lu2ht")
+position = Vector2(807.5, 440)
+scale = Vector2(1.10742, 1.03516)
+texture = ExtResource("3_764jy")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(814, 808)
@@ -596,4 +596,4 @@ text = " 0,00"
 [connection signal="pressed" from="ticketTransporte/btnVenderTrans" to="." method="OnBtnVenderTransPressed"]
 [connection signal="pressed" from="ticketSaude/btnComprarSau" to="." method="OnBtnComprarSauPressed"]
 [connection signal="pressed" from="ticketSaude/btnVenderSau" to="." method="OnBtnVenderSauPressed"]
-[connection signal="pressed" from="BotaoProximoTurno" to="." method="OnBotaoProximoTurno"]
+[connection signal="pressed" from="BotaoProximoTurno" to="." method="NovaRodada"]

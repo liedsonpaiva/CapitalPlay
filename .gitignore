@@ -1,7 +1,19 @@
-.godot/*
-!.godot/.gitkeep
-.cache
-.bin
-.cfg
-#garantindo a importacao da pasta Cartas
+# Pastas da Godot
+.import/
+.godot/
+.cache/
+.cfg/
+.bin/
+
+# Garantir a importação da pasta Cartas
 !assents/Cartas
+
+# VSCode
+.vscode/
+
+# Arquivos temporários do C#
+*.dll
+*.exe
+*.pdb
+*.csproj.user
+*.sln.docstates
