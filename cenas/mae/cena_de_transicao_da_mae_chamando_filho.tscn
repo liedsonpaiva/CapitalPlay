@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dwdq6m6xe06od"]
 
-[ext_resource type="Script" uid="uid://hv6628vs7jwe" path="res://scripts/mae/CenaDeTransicaoDaMaeChamandoFilho.cs" id="1_8w7qi"]
+[ext_resource type="Script" uid="uid://dofkdq3fvv36q" path="res://scripts/mae/CenaDeTransicaoMaeChamandoFilho.gd" id="1_8w7qi"]
 [ext_resource type="Texture2D" uid="uid://fwoaoqp7epn8" path="res://assets/cenarios/cenas_jogo/ato1/casa_cena2/cenarios/ac01f481c6e3b1ba929d4898423176ff.jpg" id="2_e04ey"]
 [ext_resource type="Theme" uid="uid://e4phmqgo0wcg" path="res://scripts/menu/fonte_Menu.tres" id="3_yjqu1"]
 
