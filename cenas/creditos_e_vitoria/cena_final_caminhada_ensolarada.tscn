@@ -1,6 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://d0reiheej3hb0"]
 
-[ext_resource type="Script" uid="uid://17q164xutm1f" path="res://scripts/creditos_e_vitoria/CenaFinalCaminhadaEnsolarada.cs" id="1_54fl5"]
+[ext_resource type="Script" uid="uid://csa1id8if6cip" path="res://scripts/creditos_e_vitoria/cena_final_caminhada_ensolarada.gd" id="1_54fl5"]
 [ext_resource type="PackedScene" uid="uid://ckswjkl7c765b" path="res://utilitarios/CenaDeTransicao/transition in.tscn" id="2_abumm"]
 [ext_resource type="Shader" uid="uid://cqymponthirlv" path="res://shaders/Movimentação BackGround.gdshader" id="3_irrg6"]
 [ext_resource type="Texture2D" uid="uid://buno5phb1ugtx" path="res://assets/cenarios/Menu/fundo_do_menu_da_cidade/cidade5/1.png" id="4_rfisa"]
@@ -163,9 +163,9 @@ position = Vector2(623, 400)
 offset = Vector2(20, 0)
 
 [node name="Label" type="Label" parent="."]
-offset_left = 302.0
+offset_left = 245.0
 offset_top = 42.0
-offset_right = 1202.0
+offset_right = 1145.0
 offset_bottom = 122.0
 theme = ExtResource("11_sv5bj")
 theme_override_colors/font_color = Color(1, 0.843137, 0, 1)

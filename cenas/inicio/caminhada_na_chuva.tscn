@@ -1,6 +1,6 @@
-[gd_scene load_steps=27 format=3 uid="uid://bfd6g4rs7wvuo"]
+[gd_scene load_steps=28 format=3 uid="uid://bfd6g4rs7wvuo"]
 
-[ext_resource type="Script" uid="uid://cfgesrocha33c" path="res://scripts/inicio/CaminhadaNaChuva.cs" id="1_utaiv"]
+[ext_resource type="Script" uid="uid://se556vt11l3u" path="res://cenas/inicio/caminhada_na_chuva.gd" id="1_2p557"]
 [ext_resource type="PackedScene" uid="uid://ckswjkl7c765b" path="res://utilitarios/CenaDeTransicao/transition in.tscn" id="2_vq2ah"]
 [ext_resource type="Shader" uid="uid://cqymponthirlv" path="res://shaders/Movimentação BackGround.gdshader" id="3_c51bo"]
 [ext_resource type="Texture2D" uid="uid://dcmclxll0tkvp" path="res://assets/cenarios/cenas_jogo/ato1/cidade_cena1/1.png" id="4_sf104"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://c76iibcx38gi7" path="res://sprites_players/players/Untitled 10-24-2024 02-32-50.png" id="10_opufv"]
 [ext_resource type="Theme" uid="uid://e4phmqgo0wcg" path="res://scripts/menu/fonte_Menu.tres" id="11_7f2is"]
 [ext_resource type="Shader" uid="uid://c41kmqlrs4dya" path="res://utilitarios/CenaDeTransicao/Shaders_Transition.tres" id="12_7mi1i"]
+[ext_resource type="AudioStream" uid="uid://bkjqq15xkibke" path="res://sounds/capital-inicial-primeiros-erros-chove-acustico-mtv_3kkYW6SA.mp3" id="13_utjik"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bcakk"]
 shader = ExtResource("3_c51bo")
@@ -236,7 +237,7 @@ shader_parameter/curtains = 1.0
 shader_parameter/type = 2
 
 [node name="CaminhadaNaChuva" type="Node2D"]
-script = ExtResource("1_utaiv")
+script = ExtResource("1_2p557")
 
 [node name="Transição IN" parent="." instance=ExtResource("2_vq2ah")]
 
@@ -345,6 +346,7 @@ theme = ExtResource("11_7f2is")
 theme_override_colors/font_color = Color(0, 0, 0, 0)
 theme_override_font_sizes/font_size = 50
 text = "\"Se um dia eu pudesse ver…\""
+uppercase = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -361,3 +363,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[node name="PRIMEIROS ERROS (CHOVE)" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_utjik")
+volume_db = -2.591
+autoplay = true

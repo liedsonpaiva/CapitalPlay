@@ -6,13 +6,13 @@ class_name tabuleiroclass
 @onready var label_saldo_valor: Label = $Sprite2D/SaldoValor
 
 var _current_carta_sprite: Sprite2D = null
-var quantiAcaoAlim := 0
-var quantiAcaoSider := 0
-var quantiAcaoTecno := 0
-var quantiAcaoTrans := 0
-var quantiAcaoSau := 0
+var quantiAcaoAlim: int = 0
+var quantiAcaoSider: int = 0
+var quantiAcaoTecno: int = 0
+var quantiAcaoTrans: int = 0
+var quantiAcaoSau: int = 0
 var carta_anterior: carta_informacao = null
-var acoes_lista: Array = []
+var acoes_lista: Array = []  
 var saldo: saldos
 var menu: MenuDeAcoes
 
@@ -20,16 +20,16 @@ func D6() -> int:
 	return randi_range(1, 6)
 
 func D66() -> int:
-	return randi_range(-6, 6)
+	return floor(randf_range(-6, 6))
 
 func D8() -> int:
-	return randi_range(4, 8)
+	return floor(randf_range(4, 8))
 
-func adicionar_acao(nicho: String, preco: float) -> void:
+func adicionar_acao(nicho: String, preco: float):
 	var nova_acao = acoes.new(nicho, preco)
 	acoes_lista.append(nova_acao)
 
-func inicializar_acoes() -> void:
+func inicializar_acoes():
 	adicionar_acao("Transporte", D8())
 	adicionar_acao("Siderúrgica", D8())
 	adicionar_acao("Tecnologia", D8())
@@ -37,46 +37,51 @@ func inicializar_acoes() -> void:
 	adicionar_acao("Alimentação", D8())
 	atualizar_valores_acoes()
 
-func atualizar_valores_acoes() -> void:
-	$"SituaçAçãoTrans/ValorAçãoTrans".text = "R$ %.2f" % max(acoes_lista[0].preco, 0.01)
-	$"SituaçAçãoSider/ValorAçãoSider".text = "R$ %.2f" % max(acoes_lista[1].preco, 0.01)
-	$"SituaçAçãoTecno/ValorAçãoTecno".text = "R$ %.2f" % max(acoes_lista[2].preco, 0.01)
-	$"SituaçAçãoSaúde/ValorAçãoSau".text = "R$ %.2f" % max(acoes_lista[3].preco, 0.01)
-	$"SituaçAçãoAlimen/ValorAçãoAlime".text = "R$ %.2f" % max(acoes_lista[4].preco, 0.01)
+func atualizar_valores_acoes():
+	$"SituaçAçãoTrans/ValorAçãoTrans".text = "R$ %.2f" % acoes_lista[0].preco
+	$"SituaçAçãoSider/ValorAçãoSider".text = "R$ %.2f" % acoes_lista[1].preco
+	$"SituaçAçãoTecno/ValorAçãoTecno".text = "R$ %.2f" % acoes_lista[2].preco
+	$"SituaçAçãoSaúde/ValorAçãoSau".text = "R$ %.2f" % acoes_lista[3].preco
+	$"SituaçAçãoAlimen/ValorAçãoAlime".text = "R$ %.2f" % acoes_lista[4].preco
+
+func ajustar_preco_minimo(acao: acoes) -> void:
+	if acao.preco < 1.0:
+		acao.preco = 1.0
 
 func subida(acao: acoes) -> void:
 	acao.preco += D6()
-	acao.preco = max(acao.preco, 0.01)
 
 func queda(acao: acoes) -> void:
 	acao.preco -= D6()
-	acao.preco = max(acao.preco, 0.01)
+	ajustar_preco_minimo(acao)
 
 func volatil(acao: acoes) -> void:
 	acao.preco += D66()
-	acao.preco = max(acao.preco, 0.01)
+	ajustar_preco_minimo(acao)
 
-func mudar_valor_acoes(carta: carta_informacao) -> void:
+func mudar_valor_acoes(carta: carta_informacao):
 	var acao1 = _buscar_acao_por_nicho(carta.nicho)
-	if acao1 == null:
+	if not acao1:
 		print("Erro: Ação não encontrada para nicho '%s'" % carta.nicho)
 		return
 
 	if carta.informacao:
 		print("Subida para o nicho '%s'" % acao1.nicho)
-		subida(acao1)
+		subida(acao1)  # Aumenta o valor da ação
 	else:
 		print("Queda para o nicho '%s'" % acao1.nicho)
-		queda(acao1)
-
+		queda(acao1)  # Reduz o valor da ação
+		
 	print("Preço após impacto direto: R$ %.2f" % acao1.preco)
 
+	# Volatilidade nas outras ações
 	for acao in acoes_lista:
 		if acao.nicho != acao1.nicho:
 			print("Volatilidade para o nicho '%s'" % acao.nicho)
 			volatil(acao)
 			print("Novo preço do nicho '%s': R$ %.2f" % [acao.nicho, acao.preco])
 
+	# Atualiza os valores na interface
 	atualizar_valores_acoes()
 
 func _buscar_acao_por_nicho(nicho: String) -> acoes:
@@ -85,23 +90,24 @@ func _buscar_acao_por_nicho(nicho: String) -> acoes:
 			return acao
 	return null
 
-func nova_rodada() -> void:
+func nova_rodada():
+	# Remove a carta exibida anteriormente, se houver
 	if _current_carta_sprite:
 		remove_child(_current_carta_sprite)
 		_current_carta_sprite.queue_free()
 		_current_carta_sprite = null
-
+	# Aplica o impacto da carta anterior (se houver)
 	if carta_anterior != null:
 		print("Aplicando impacto da carta anterior: %s" % carta_anterior.nicho)
 		mudar_valor_acoes(carta_anterior)
-
+	# Sorteia uma nova carta e exibe sem aplicar impacto ainda
 	var cartas_sorteadas = sortear_cartas(1)
 	carta_anterior = cartas_sorteadas[0]
 	print("Nova carta sorteada: %s" % carta_anterior.nicho)
 	exibir_carta(carta_anterior)
 
 func sortear_cartas(quantidade: int) -> Array:
-	var cartas := []
+	var cartas = []
 	var nichos_possiveis = ["Transporte", "Siderúrgica", "Tecnologia", "Saúde", "Alimentação"]
 	for i in range(quantidade):
 		var nicho_aleatorio = nichos_possiveis[randi() % nichos_possiveis.size()]
@@ -109,56 +115,57 @@ func sortear_cartas(quantidade: int) -> Array:
 		cartas.append(carta_informacao.new(nicho_aleatorio, informacao_aleatoria))
 	return cartas
 
-func exibir_carta(carta: carta_informacao) -> void:
-	var sprite := Sprite2D.new()
-	var caminho := ""
-
+func exibir_carta(carta: carta_informacao):
+	var sprite = Sprite2D.new()
 	match carta.nicho:
 		"Transporte":
-			caminho = "res://assets/cartas/carta_alta_transporte.png" if carta.informacao else "res://assets/cartas/carta_baixa_transporte.png"
+			if carta.informacao:
+				sprite.texture = preload("res://assets/cartas/carta_alta_transporte.png")
+			else:
+				sprite.texture = preload("res://assets/cartas/carta_baixa_transporte.png")
 		"Siderúrgica":
-			caminho = "res://assets/cartas/carta_alta_siderurgica.png" if carta.informacao else "res://assets/cartas/carta_baixa_siderurgica.png"
+			if carta.informacao:
+				sprite.texture = preload("res://assets/cartas/carta_alta_siderurgica.png")
+			else:
+				sprite.texture = preload("res://assets/cartas/carta_baixa_siderurgica.png")
 		"Tecnologia":
-			caminho = "res://assets/cartas/carta_alta_tecnologia.png" if carta.informacao else "res://assets/cartas/carta_baixa_tecnologia.png"
+			if carta.informacao:
+				sprite.texture = preload("res://assets/cartas/carta_alta_tecnologia.png")
+			else:
+				sprite.texture = preload("res://assets/cartas/carta_baixa_tecnologia.png")
 		"Saúde":
-			caminho = "res://assets/cartas/carta_alta_saude.png" if carta.informacao else "res://assets/cartas/carta_baixa_saude.png"
+			if carta.informacao:
+				sprite.texture = preload("res://assets/cartas/carta_alta_saude.png")
+			else:
+				sprite.texture = preload("res://assets/cartas/carta_baixa_saude.png")
 		"Alimentação":
-			caminho = "res://assets/cartas/carta_alta_alimentacao.png" if carta.informacao else "res://assets/cartas/carta_baixa_alimentacao.png"
+			if carta.informacao:
+				sprite.texture = preload("res://assets/cartas/carta_alta_alimentacao.png")
+			else:
+				sprite.texture = preload("res://assets/cartas/carta_baixa_alimentacao.png")
 
-	sprite.texture = load(caminho)
 	var janela_tamanho = get_viewport().get_visible_rect().size
 	sprite.position = janela_tamanho - Vector2(sprite.texture.get_size().x * 0.5 + 20, sprite.texture.get_size().y * 0.55 + 20)
 	sprite.scale = Vector2(0.8, 0.8)
 	add_child(sprite)
 	_current_carta_sprite = sprite
 
-func calcular_preco_total(nicho: String, quantidade: int) -> float:
-	if quantidade <= 0:
-		return 0.00
-	
-	var preco_acao = menu.calcular_preco_acao(nicho)
-	
-	if preco_acao <= 0.0:
-		preco_acao = 0.01
-	
-	return preco_acao * quantidade
-
-func atualizar_lucro() -> void:
+# Função para atualizar o lucro
+func atualizar_lucro():
 	var lucro_atual = saldo.puxar_saldo() - 100.0
 	var label_lucro: Label = $Lucro/LucroAtual
 	label_lucro.text = "R$ %.2f" % lucro_atual
 
 func _ready() -> void:
-	botao_proximo_turno.pressed.connect(nova_rodada)
+	botao_proximo_turno.connect("pressed", Callable(self, "nova_rodada"))
 	saldo = saldos.new(100.0)
 	label_saldo_valor.text = "R$ %.2f" % saldo.puxar_saldo()
-
 	menu = MenuDeAcoes.new()
 	menu.configurar(self, saldo)
-
 	inicializar_acoes()
-	atualizar_lucro()
-
+	var label_Lucro_Atual: Label = $Lucro/LucroAtual
+	atualizar_lucro()  # Atualiza o lucro inicial
+	
 	# Inicializa valores dos investimentos
 	$ticketAlimentacao/valorInvestido.text = "R$ 0,00"
 	$ticketSiderurgica/valorInvestido.text = "R$ 0,00"
@@ -169,78 +176,72 @@ func _ready() -> void:
 	print("Ações iniciais:")
 	for acao in acoes_lista:
 		print("Nicho: %s, Preço: %f" % [acao.nicho, acao.preco])
-
+		
+	# Inicia o jogo com a primeira rodada
 	nova_rodada()
 	print("Inicialização do Tabuleiro.")
 
-
-# Parte 3: Métodos de Realizar compras e vendas
-
-# Verifica se o jogador venceu
+# Função para verificar a vitória e mudar para a cena de vitória
+# Função de verificar vitória
 func verificar_vitoria():
-	if saldo.puxar_saldo() >= 500:
+	if saldo.puxar_saldo() >= 200:
 		get_tree().change_scene_to_file("res://cenas/cena_vitoria/cena_vitoria.tscn")
 
-# Função genérica para compras
-func realizar_compra(nome_acao: String, label_node: Label, quantidade_ref: String):
-	var quantidade = self.get(quantidade_ref)
-
-	var preco_total = menu.calcular_preco_total(nome_acao, quantidade + 1) # +1 para considerar a compra da ação
-	if saldo.puxar_saldo() >= preco_total:
-		label_node.text = "R$ %.2f" % preco_total
-		menu.comprar_acao(nome_acao, 1)
-		quantidade += 1
-		self.set(quantidade_ref, quantidade)
-		$Sprite2D/SaldoValor.text = "R$ %.2f" % saldo.puxar_saldo()
-		atualizar_lucro()
-		verificar_vitoria()
-	else:
-		print("Saldo insuficiente para comprar mais ações.")
-		# Pode também exibir uma mensagem de erro na interface do usuário
-	
-
-func realizar_venda(nome_acao: String, label_node: Label, quantidade_ref: String):
-	var quantidade = self.get(quantidade_ref)
-
-	if quantidade <= 0:
-		label_node.text = "R$ 0.00"
-		return
-
-	menu.vender_acao(nome_acao, 1)
-	quantidade -= 1
-	self.set(quantidade_ref, quantidade)
-
-	label_node.text = "R$ %.2f" % menu.calcular_preco_total(nome_acao, quantidade)
+# Função genérica de compra
+func comprar_acao(tipo: String, quantidade: int, label_valor: Label):
+	menu.comprar_acao(tipo, quantidade)
+	label_valor.text = "R$ %.2f" % menu.calcular_preco_total(tipo, quantidade)
 	$Sprite2D/SaldoValor.text = "R$ %.2f" % saldo.puxar_saldo()
 	atualizar_lucro()
+	verificar_vitoria()
 
-	
-func _on_btn_comprar_alim_pressed():
-	realizar_compra("Alimentação", $ticketAlimentacao/valorInvestido, "quantiAcaoAlim")
+# Função genérica de venda
+func vender_acao(tipo: String, quantidade_ref: Dictionary, label_valor: Label):
+	if quantidade_ref.value == 0:
+		label_valor.text = "R$ 0.00"
+		return
+	menu.vender_acao(tipo, 1)
+	quantidade_ref.value -= 1
+	if quantidade_ref.value == 0:
+		label_valor.text = "R$ 0.00"
+	else:
+		label_valor.text = "R$ %.2f" % menu.calcular_preco_total(tipo, quantidade_ref.value)
+	$Sprite2D/SaldoValor.text = "R$ %.2f" % saldo.puxar_saldo()
+	atualizar_lucro()
+	verificar_vitoria()
 
-func _on_btn_comprar_side_pressed():
-	realizar_compra("Siderúrgica", $ticketSiderurgica/valorInvestido, "quantiAcaoSider")
+# Botões de compra
+func OnBtnComprarAlimPressed() -> void:
+	comprar_acao("Alimentação", quantiAcaoAlim, $ticketAlimentacao/valorInvestido)
 
-func _on_btn_comprar_tecno_pressed():
-	realizar_compra("Tecnologia", $ticketTecnologia/valorInvestido, "quantiAcaoTecno")
+func OnBtnComprarSidePressed() -> void:
+	comprar_acao("Siderúrgica", quantiAcaoSider, $ticketSiderurgica/valorInvestido)
 
-func _on_btn_comprar_trans_pressed():
-	realizar_compra("Transporte", $ticketTransporte/valorInvestido, "quantiAcaoTrans")
+func OnBtnComprarTecnoPressed() -> void:
+	comprar_acao("Tecnologia", quantiAcaoTecno, $ticketTecnologia/valorInvestido)
 
-func _on_btn_comprar_sau_pressed():
-	realizar_compra("Saúde", $ticketSaude/valorInvestido, "quantiAcaoSau")
+func OnBtnComprarTransPressed() -> void:
+	comprar_acao("Transporte", quantiAcaoTrans, $ticketTransporte/valorInvestido)
 
-func _on_btn_vender_alim_pressed():
-	realizar_venda("Alimentação", $ticketAlimentacao/valorInvestido, "quantiAcaoAlim")
+func OnBtnComprarSauPressed() -> void:
+	comprar_acao("Saúde", quantiAcaoSau, $ticketSaude/valorInvestido)
 
-func _on_btn_vender_side_pressed():
-	realizar_venda("Siderúrgica", $ticketSiderurgica/valorInvestido, "quantiAcaoSider")
+# Botões de venda
+func OnBtnVenderAlimPressed() -> void:
+	vender_acao("Alimentação", get_ref("quantiAcaoAlim"), $ticketAlimentacao/valorInvestido)
 
-func _on_btn_vender_tecno_pressed():
-	realizar_venda("Tecnologia", $ticketTecnologia/valorInvestido, "quantiAcaoTecno")
+func OnBtnVenderSidePressed() -> void:
+	vender_acao("Siderúrgica", get_ref("quantiAcaoSider"), $ticketSiderurgica/valorInvestido)
 
-func _on_btn_vender_trans_pressed():
-	realizar_venda("Transporte", $ticketTransporte/valorInvestido, "quantiAcaoTrans")
+func OnBtnVenderTecnoPressed() -> void:
+	vender_acao("Tecnologia", get_ref("quantiAcaoTecno"), $ticketTecnologia/valorInvestido)
 
-func _on_btn_vender_sau_pressed():
-	realizar_venda("Saúde", $ticketSaude/valorInvestido, "quantiAcaoSau")
+func OnBtnVenderTransPressed() -> void:
+	vender_acao("Transporte", get_ref("quantiAcaoTrans"), $ticketTransporte/valorInvestido)
+
+func OnBtnVenderSauPressed() -> void:
+	vender_acao("Saúde", get_ref("quantiAcaoSau"), $ticketSaude/valorInvestido)
+
+# Função auxiliar para pegar referência mutável
+func get_ref(var_name: String) -> Dictionary:
+	return { "value": get(var_name) }

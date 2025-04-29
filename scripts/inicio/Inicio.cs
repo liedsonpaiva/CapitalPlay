@@ -3,13 +3,16 @@ using System;
 
 public partial class Inicio : Control
 {
-   public override void _Ready()
+    [Export] private Button InicioBotao;
+    [Export] private Button CreditosBotao;
+    [Export] private Button SairBotao;
+
+    public override void _Ready()
     {
-    GetNode<Button>("MarginContainer/HBoxContainer/VBoxContainer/InicioBotao").Pressed += OnInicioBotaoPressed;
-    GetNode<Button>("MarginContainer/HBoxContainer/VBoxContainer/CreditosBotao").Pressed += OnCreditosBotaoPressed;
-    GetNode<Button>("MarginContainer/HBoxContainer/VBoxContainer/SairBotao").Pressed += OnSairButtonPressed;
+        InicioBotao.Pressed += OnInicioBotaoPressed;
+        CreditosBotao.Pressed += OnCreditosBotaoPressed;
+        SairBotao.Pressed += OnSairButtonPressed; 
     }
-    
     // Botão de início pressionado
     private void OnInicioBotaoPressed()
     {

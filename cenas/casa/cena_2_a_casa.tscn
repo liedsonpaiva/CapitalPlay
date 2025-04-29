@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://djdqv1ats72uc" path="res://sprites_players/players/child_2d.tscn" id="7_x8gda"]
 [ext_resource type="PackedScene" uid="uid://biqulbvgam3nl" path="res://sprites_players/players/mae.tscn" id="8_4eqsb"]
 [ext_resource type="Script" uid="uid://c32gtalj51sqn" path="res://scripts/mae/InteracaoBatalhaMae.cs" id="9_uvcto"]
-[ext_resource type="Script" uid="uid://bfoftx8dhvfg3" path="res://scripts/pai/InteracaoBatalhaPai.cs" id="10_ddp6x"]
+[ext_resource type="Script" uid="uid://c68ja4pq7ojlr" path="res://scripts/pai/tile_map_layer.gd" id="10_uvcto"]
 [ext_resource type="FontFile" uid="uid://cgygq4u5j0y1w" path="res://assets/fontes _temas/futuro_do_jogo/RevMiniPixel.ttf" id="11_uk4vj"]
 [ext_resource type="StyleBox" uid="uid://ckb1wc7dvxuu3" path="res://utilitarios/Conteiner/Conteiner_fala.tres" id="12_j7wug"]
 [ext_resource type="Script" uid="uid://ol01jqmo20li" path="res://scripts/porco/nut.gd" id="13_pweiw"]
@@ -5741,7 +5741,7 @@ position = Vector2(723, 532)
 scale = Vector2(1.4, 1.4)
 tile_map_data = PackedByteArray("AAASAAAAAAACABEAABARAAAAAAADABEAABATAAEAAAABABIAABASAAEAAAACABIAABARAAEAAAADABIAABAQAAEAAAAEABIAABATAAIAAAABABMAABASAAIAAAACABMAABARAAIAAAADABMAABAQAAIAAAAEABMAABATAAMAAAABABQAABASAAMAAAACABQAABARAAMAAAADABQAABATAAQAAAABABUAABASAAQAAAACABUAABARAAQAAAADABUAABAUAAUAAAAAABYAABATAAUAAAABABYAABASAAUAAAACABYAABARAAUAAAADABYAABAQAAUAAAAEABYAABAUAAYAAAAAABcAABATAAYAAAABABcAABASAAYAAAACABcAABARAAYAAAADABcAABAQAAYAAAAEABcAABAUAAcAAAAAABgAABATAAcAAAABABgAABASAAcAAAACABgAABARAAcAAAADABgAABAQAAcAAAAEABgAABATAAgAAAABABkAABASAAgAAAACABkAABARAAgAAAADABkAABATAAkAAAABABoAABASAAkAAAACABoAABARAAkAAAADABoAABATAAoAAAABABsAABASAAoAAAACABsAABARAAoAAAADABsAABAQAAoAAAAEABsAABATAAsAAAABABwAABASAAsAAAACABwAABARAAsAAAADABwAABAQAAsAAAAEABwAABA=")
 tile_set = SubResource("TileSet_xhg25")
-script = ExtResource("10_ddp6x")
+script = ExtResource("10_uvcto")
 
 [node name="Area2D" type="Area2D" parent="TileMapLayer"]
 position = Vector2(293.571, 100)
@@ -5751,7 +5751,6 @@ position = Vector2(-17.8567, 3.21429)
 shape = SubResource("RectangleShape2D_8c814")
 
 [node name="Label" type="Label" parent="TileMapLayer/Area2D"]
-visible = false
 texture_filter = 1
 offset_left = -126.428
 offset_top = -145.714
